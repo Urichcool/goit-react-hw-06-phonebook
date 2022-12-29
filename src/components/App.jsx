@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useLocalStorage } from './hooks/useLocalStorage';
 import {
   ContactsContainer,
@@ -10,22 +9,15 @@ import { AppAddContactsForm } from './AppAddContactsForm';
 import AppContactsList from './AppContactsList';
 import { AppContactsFilterInput } from './AppContactsFilterInput';
 
-
-
 export const App = () => {
   const [contacts, setContacts] = useLocalStorage('contacts', []);
-  const [filter, setFilter] = useState('');
-
-   const formInputHandler = data => {
-     setFilter(data);
-   };
 
   const formSubmitHandler = data => {
     setContacts(state => [...state, ...data]);
   };
 
   const setContact = id => {
-    setContacts();
+    setContacts(state => state.filter(contact => contact.id !== id));
   };
 
   return (
@@ -36,12 +28,8 @@ export const App = () => {
         {contacts.length !== 0 && (
           <>
             <ContactsTitle>Contacts</ContactsTitle>
-            <AppContactsFilterInput filter={formInputHandler} />
-            <AppContactsList
-              contacts={contacts}
-              filter={filter}
-              setContact={setContact}
-            />
+            <AppContactsFilterInput />
+            <AppContactsList contacts={contacts} setContact={setContact} />
           </>
         )}
       </ContactsApp>

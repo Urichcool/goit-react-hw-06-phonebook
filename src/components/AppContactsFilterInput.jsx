@@ -1,18 +1,13 @@
-import { useState } from 'react';
 import { ContactsListLabel, ContactsFilterInput } from './App,styled';
-import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
+import { setFilter } from '../redux/filterSlice';
 
-
-
-export const AppContactsFilterInput = ({ filter }) => {
-  const [inputValue, setInputValue] = useState('');
+export const AppContactsFilterInput = () => {
+  const dispatch = useDispatch();
 
   const handleInputChange = e => {
-    setInputValue(e.currentTarget.value);
-    filter(e.currentTarget.value);
+    dispatch(setFilter(e.currentTarget.value));
   };
-
- 
 
   return (
     <ContactsListLabel>
@@ -20,13 +15,8 @@ export const AppContactsFilterInput = ({ filter }) => {
       <ContactsFilterInput
         type="text"
         name="filter"
-        value={inputValue}
         onChange={handleInputChange}
       ></ContactsFilterInput>
     </ContactsListLabel>
   );
-};
-
-AppContactsFilterInput.propTypes = {
-  filter: PropTypes.func.isRequired,
 };
