@@ -1,11 +1,10 @@
 import { ContactsList } from './App,styled';
 import AppContactsItem from './AppContactsItem';
-import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 
-const AppContactsList = ({ contacts, setContact }) => {
+const AppContactsList = () => {
   const filter = useSelector(state => state.filter);
-
+  const contacts = useSelector(state => state.contacts);
   return (
     <ContactsList>
       {contacts
@@ -18,7 +17,6 @@ const AppContactsList = ({ contacts, setContact }) => {
             key={id}
             number={number}
             id={id}
-            setContact={setContact}
           />
         ))}
     </ContactsList>
@@ -27,7 +25,4 @@ const AppContactsList = ({ contacts, setContact }) => {
 
 export default AppContactsList;
 
-AppContactsList.propTypes = {
-  contacts: PropTypes.array.isRequired,
-  setContact: PropTypes.func.isRequired,
-};
+

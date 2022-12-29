@@ -1,53 +1,35 @@
-import { useState } from 'react';
 import {
   ContactsAddForm,
   ContactsAddButton,
   ContactsListLabel,
 } from './App,styled';
 import { nanoid } from 'nanoid';
-import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
+import { addContact } from '../redux/contactsSlice';
 
-export const AppAddContactsForm = ({ onSubmit, contacts }) => {
-  const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
-
-  const handleInputChange = e => {
-    const { name, value } = e.currentTarget;
-
-    switch (name) {
-      case 'name':
-        setName(value);
-        break;
-
-      case 'number':
-        setNumber(value);
-        break;
-
-      default:
-        return;
-    }
-  };
+export const AppAddContactsForm = () => {
+  const dispatch = useDispatch();
+  const contacts = useSelector(state => state.contacts);
 
   const handleFormSubmit = e => {
     e.preventDefault();
+    
+    const name = e.currentTarget.elements[0].value;
+    const number = e.currentTarget.elements[1].value;
+    
     if (contacts.some(contact => contact.name === name)) {
       window.alert(`${name} is already in contacts`);
+      e.currentTarget.reset();
       return;
     }
-
-    onSubmit([
-      {
+    dispatch(
+      addContact({
         name: name,
         id: nanoid(),
         number: number,
-      },
-    ]);
-    handleFormReset();
-  };
-
-  const handleFormReset = () => {
-    setName('');
-    setNumber('');
+      })
+    );
+    e.currentTarget.reset();
   };
 
   return (
@@ -56,8 +38,6 @@ export const AppAddContactsForm = ({ onSubmit, contacts }) => {
         Name
         <input
           type="text"
-          value={name}
-          onChange={handleInputChange}
           name="name"
           pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
           title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
@@ -68,8 +48,6 @@ export const AppAddContactsForm = ({ onSubmit, contacts }) => {
         Number
         <input
           type="tel"
-          value={number}
-          onChange={handleInputChange}
           name="number"
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
           title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
@@ -79,9 +57,4 @@ export const AppAddContactsForm = ({ onSubmit, contacts }) => {
       <ContactsAddButton type="submit">Add contact</ContactsAddButton>
     </ContactsAddForm>
   );
-};
-
-AppAddContactsForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-  contacts: PropTypes.array.isRequired,
 };
