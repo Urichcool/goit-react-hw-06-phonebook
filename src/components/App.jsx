@@ -25,7 +25,7 @@ export const App = () => {
   };
 
   const setContact = id => {
-    setContacts(state => state.filter(contact => contact.id !== id));
+    setContacts();
   };
 
   return (
