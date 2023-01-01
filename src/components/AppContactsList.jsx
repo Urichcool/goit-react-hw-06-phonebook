@@ -1,9 +1,10 @@
 import { ContactsList } from './App,styled';
 import AppContactsItem from './AppContactsItem';
 import { useSelector } from 'react-redux';
+import { selectFilter } from 'redux/filterSlice';
 
 const AppContactsList = () => {
-  const filter = useSelector(state => state.filter);
+  const filter = useSelector(selectFilter)
   const { contacts } = useSelector(state => state.contacts);
 
   return (

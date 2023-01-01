@@ -7,11 +7,11 @@ import {
 import { AppAddContactsForm } from './AppAddContactsForm';
 import AppContactsList from './AppContactsList';
 import { AppContactsFilterInput } from './AppContactsFilterInput';
-import { contactsArray } from '../redux/contactsSlice';
+import { selectContacts } from '../redux/contactsSlice';
 import { useSelector } from 'react-redux';
 
 export const App = () => {
-  const contacts = useSelector(contactsArray);
+  const contacts = useSelector(selectContacts);
 
   return (
     <ContactsContainer>

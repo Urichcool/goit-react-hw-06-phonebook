@@ -30,4 +30,4 @@ export const contactsReducer = persistReducer(
   contactsSlice.reducer
 );
 
-export const contactsArray = state => state.contacts.contacts;
+export const selectContacts = state => state.contacts.contacts;

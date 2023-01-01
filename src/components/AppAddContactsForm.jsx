@@ -6,12 +6,12 @@ import {
 import { nanoid } from 'nanoid';
 import { useDispatch } from 'react-redux';
 import { addContact } from '../redux/contactsSlice';
-import { contactsArray } from '../redux/contactsSlice';
+import { selectContacts } from '../redux/contactsSlice';
 import { useSelector } from 'react-redux';
 
 export const AppAddContactsForm = () => {
   const dispatch = useDispatch();
-  const contacts = useSelector(contactsArray);
+  const contacts = useSelector(selectContacts);
   const handleFormSubmit = e => {
     e.preventDefault();
 
