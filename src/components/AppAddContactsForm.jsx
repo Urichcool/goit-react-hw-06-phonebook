@@ -4,19 +4,20 @@ import {
   ContactsListLabel,
 } from './App,styled';
 import { nanoid } from 'nanoid';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { addContact } from '../redux/contactsSlice';
+import { contactsArray } from '../redux/contactsSlice';
+import { useSelector } from 'react-redux';
 
 export const AppAddContactsForm = () => {
   const dispatch = useDispatch();
-  const { contacts } = useSelector(state => state.contacts);
-
+  const contacts = useSelector(contactsArray);
   const handleFormSubmit = e => {
     e.preventDefault();
-    
+
     const name = e.currentTarget.elements[0].value;
     const number = e.currentTarget.elements[1].value;
-    
+
     if (contacts.some(contact => contact.name === name)) {
       window.alert(`${name} is already in contacts`);
       e.currentTarget.reset();

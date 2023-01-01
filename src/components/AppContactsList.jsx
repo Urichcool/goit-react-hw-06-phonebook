@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 const AppContactsList = () => {
   const filter = useSelector(state => state.filter);
   const { contacts } = useSelector(state => state.contacts);
+
   return (
     <ContactsList>
       {contacts
@@ -12,17 +13,10 @@ const AppContactsList = () => {
           contact.name.toLowerCase().includes(filter.toLowerCase().trim())
         )
         .map(({ name, id, number }) => (
-          <AppContactsItem
-            name={name}
-            key={id}
-            number={number}
-            id={id}
-          />
+          <AppContactsItem name={name} key={id} number={number} id={id} />
         ))}
     </ContactsList>
   );
 };
 
 export default AppContactsList;
-
-
